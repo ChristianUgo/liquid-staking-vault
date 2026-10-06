@@ -1,0 +1,10 @@
+{
+  "name": "@beacon-lite/protocol-config",
+  "version": "0.1.0",
+  "description": "ABI definitions and chain deployment addresses for Beacon Lite",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "build": "node export-abis.js"
+  }
+}

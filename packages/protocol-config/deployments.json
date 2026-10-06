@@ -1,0 +1,16 @@
+{
+  "31337": {
+    "name": "Anvil Local",
+    "vault": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+    "adapter": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+    "withdrawalQueue": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+    "deploymentBlock": 1
+  },
+  "11155111": {
+    "name": "Sepolia",
+    "vault": "0xa2f591f76adb03a62b174c29711bceb56adddb03",
+    "adapter": "0x0694adc4538e20f6c4f7e9db058c7e2904b1bad4",
+    "withdrawalQueue": "0xc08b7862740363ff53bcf1e6cd7238749c40e491",
+    "deploymentBlock": 11717287
+  }
+}
