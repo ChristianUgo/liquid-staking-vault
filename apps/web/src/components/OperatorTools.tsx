@@ -21,7 +21,7 @@ type RequestRecord = readonly [
 ];
 
 function normalizeRequest(value: unknown): RequestRecord | undefined {
-  if (Array.isArray(value)) return value as RequestRecord;
+  if (Array.isArray(value)) return value as unknown as RequestRecord;
   if (!value || typeof value !== 'object') return undefined;
   const candidate = value as Partial<Record<'owner' | 'shares' | 'requestTimestamp' | 'claimableAssets' | 'finalized' | 'claimed', unknown>>;
   if (typeof candidate.owner !== 'string' || typeof candidate.shares !== 'bigint' || typeof candidate.requestTimestamp !== 'bigint' || typeof candidate.claimableAssets !== 'bigint' || typeof candidate.finalized !== 'boolean' || typeof candidate.claimed !== 'boolean') return undefined;
@@ -82,15 +82,16 @@ export function OperatorTools() {
   const { data: hash, writeContract, isPending, error: writeError, reset } = useWriteContract();
   const { isLoading: isConfirming, isSuccess, error: receiptError } = useWaitForTransactionReceipt({ hash });
   const request = normalizeRequest(status);
+  const latestRequestId = typeof nextRequestId === 'bigint' ? nextRequestId : undefined;
   const isOwner = Boolean(address && typeof queueOwner === 'string' && address.toLowerCase() === queueOwner.toLowerCase());
   const connectedReceiver = receiver || address || '';
 
   useEffect(() => {
-    if (!hasAutoSelectedLatest && nextRequestId !== undefined && nextRequestId > 1n) {
-      setRequestIdInput((nextRequestId - 1n).toString());
+    if (!hasAutoSelectedLatest && latestRequestId !== undefined && latestRequestId > 1n) {
+      setRequestIdInput((latestRequestId - 1n).toString());
       setHasAutoSelectedLatest(true);
     }
-  }, [hasAutoSelectedLatest, nextRequestId]);
+  }, [hasAutoSelectedLatest, latestRequestId]);
 
   useEffect(() => {
     if (!isSuccess) return;
@@ -135,7 +136,7 @@ export function OperatorTools() {
       <div className="operatorField">
         <label htmlFor="request-id">Request ID</label>
         <input id="request-id" inputMode="numeric" placeholder="1" value={requestIdInput} onChange={(event) => setRequestIdInput(event.target.value)} />
-        <span className="formHint">Latest: {typeof nextRequestId === 'bigint' && nextRequestId > 0n ? (nextRequestId - 1n).toString() : '—'}</span>
+        <span className="formHint">Latest: {latestRequestId !== undefined && latestRequestId > 0n ? (latestRequestId - 1n).toString() : '—'}</span>
       </div>
       <div className="operatorField">
         <label htmlFor="max-requests">Finalize count</label>
