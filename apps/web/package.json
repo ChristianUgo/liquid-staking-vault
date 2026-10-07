@@ -9,6 +9,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@beacon-lite/protocol-config": "file:../../packages/protocol-config",
     "@tanstack/react-query": "^5.66.0",
     "lucide-react": "^0.475.0",
     "next": "16.3.5",
